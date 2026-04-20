@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de"> 
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
   --red:#e8002d;--black:#111;--white:#fff;
   --gray:#f5f5f5;--border:#e0e0e0;--muted:#666;
 }
-html,body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--black);font-size:15px;line-height:1.5;overflow-x:hidden}
+html,body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--black);font-size:15px;line-height:1.5}
 
 /* ── NAV ── */
 nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:200}
@@ -31,35 +31,35 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 clam
 .mobile-menu .nb{padding:14px clamp(1rem,4vw,2rem);border-bottom:1px solid var(--border);text-align:left;font-size:15px}
 
 /* ── HERO ── */
-.hero{padding:clamp(2.5rem,6vw,5rem) clamp(1rem,4vw,2rem) clamp(2rem,5vw,3.5rem);border-bottom:1px solid var(--border)}
+.hero{padding:clamp(2.5rem,6vw,5rem) clamp(2rem,8vw,6rem) clamp(2rem,5vw,3.5rem);border-bottom:1px solid var(--border)}
 .hero-tag{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
 .hero-tag::before{content:'';display:block;width:24px;height:1px;background:var(--muted)}
-.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(42px,10vw,100px);line-height:.93;letter-spacing:-1px;text-transform:uppercase;margin-bottom:clamp(1.25rem,3vw,2rem);max-width:800px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(42px,6.5vw,110px);line-height:.93;letter-spacing:-2px;text-transform:uppercase;margin-bottom:clamp(1.25rem,3vw,2rem);max-width:clamp(400px,65vw,900px)}
 .hero h1 em{font-style:italic;color:var(--red)}
-.hero-desc{font-size:clamp(13px,1.6vw,15px);color:var(--muted);max-width:320px;font-weight:300;line-height:1.7;margin-bottom:2rem}
+.hero-desc{font-size:clamp(14px,1.2vw,17px);color:var(--muted);max-width:clamp(280px,35vw,480px);font-weight:300;line-height:1.7;margin-bottom:2rem}
 .hero-btns{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .btn-blk{background:var(--black);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.4vw,14px);letter-spacing:.08em;text-transform:uppercase;padding:12px 22px;border:none;cursor:pointer}
 .btn-blk:hover{background:#333}
 .btn-ghost{background:none;color:var(--black);font-family:'Barlow',sans-serif;font-size:13px;padding:11px 16px;border:1px solid var(--border);cursor:pointer}
 .btn-ghost:hover{border-color:#999}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);margin-top:clamp(1.5rem,4vw,3rem)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);margin-top:clamp(1.5rem,4vw,3rem);max-width:clamp(400px,65vw,900px)}
 .stat{padding:clamp(1rem,2.5vw,1.5rem) 0;border-right:1px solid var(--border)}
 .stat:last-child{border-right:none}
-.stat-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(20px,3.5vw,34px);color:var(--red)}
+.stat-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(20px,2.8vw,42px);color:var(--red)}
 .stat-l{font-size:clamp(9px,1vw,11px);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px}
 
 /* ── MODULE NAV ── */
-.mod-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 clamp(1rem,4vw,2rem);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.mod-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 clamp(2rem,8vw,6rem);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .mod-nav::-webkit-scrollbar{display:none}
 .mt{background:none;border:none;border-bottom:2px solid transparent;padding:14px 0;margin-right:clamp(1rem,3vw,2rem);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(10px,1.2vw,12px);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
 .mt:hover{color:var(--black)}
 .mt.active{color:var(--black);border-bottom-color:var(--red)}
 
 /* ── PAGES ── */
-.page{display:none;max-width:min(1000px,100%);margin:0 auto;padding:clamp(2rem,5vw,3rem) clamp(1rem,4vw,2rem)}
+.page{display:none;max-width:min(1200px,100%);margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(2rem,8vw,6rem)}
 .page.active{display:block}
 .sec-num{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
-.sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,6vw,54px);line-height:.95;text-transform:uppercase;letter-spacing:-1px;margin-bottom:.5rem}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,4.5vw,64px);line-height:.95;text-transform:uppercase;letter-spacing:-1px;margin-bottom:.5rem}
 .sec-title em{font-style:italic;color:var(--red)}
 .sec-sub{font-size:13px;color:var(--muted);font-weight:300;margin-bottom:2rem}
 
@@ -217,15 +217,30 @@ footer a:hover{color:var(--black)}
 
 /* LARGE SCREEN / TV — ≥ 1400px */
 @media(min-width:1400px){
-  .page{max-width:1200px}
-  .hero h1{font-size:clamp(80px,7vw,120px)}
-  .hero-desc{max-width:420px;font-size:16px}
-  .stat-n{font-size:40px}
-  .sec-title{font-size:clamp(50px,5vw,72px)}
+  .page{max-width:1300px;padding:4rem 6rem}
+  .hero{padding:6rem 8rem 5rem}
+  .hero h1{font-size:clamp(100px,7.5vw,140px)}
+  .hero h1,.hero-desc,.hero-btns,.hero-stats{max-width:none}
+  .hero-desc{max-width:540px;font-size:18px}
+  .hero-stats{max-width:none}
+  .stat-n{font-size:48px}
+  .stat-l{font-size:12px}
+  .sec-title{font-size:72px}
   .r-panel-title{font-size:26px}
   .metric-v{font-size:32px}
   .feat-card h3{font-size:32px}
   body{font-size:16px}
+  .mod-nav{padding:0 8rem}
+}
+@media(min-width:2000px){
+  .page{max-width:1600px;padding:5rem 8rem}
+  .hero{padding:8rem 10rem 6rem}
+  .hero h1{font-size:160px}
+  .hero-desc{max-width:600px;font-size:20px}
+  .stat-n{font-size:56px}
+  .sec-title{font-size:88px}
+  body{font-size:17px}
+  .mod-nav{padding:0 10rem}
 }
 </style>
 </head>
@@ -270,7 +285,7 @@ footer a:hover{color:var(--black)}
     <div class="stat"><div class="stat-n">26</div><div class="stat-l">Kantone abgedeckt</div></div>
     <div class="stat"><div class="stat-n">CHF 0.—</div><div class="stat-l">Vollständig kostenlos</div></div>
     <div class="stat"><div class="stat-n">24h</div><div class="stat-l">Offerte garantiert</div></div>
-    <div class="stat"><div class="stat-n" style="color:var(--black)">~</div><div class="stat-l">Einschätzung, keine Gewähr</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--black)">4</div><div class="stat-l">Finanzmodule</div></div>
   </div>
 </div>
 </div>
