@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinanzKompass.ch — Ihre Schweizer Finanzplattform</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#e8002d;--black:#111;--white:#fff;
+  --gray:#f5f5f5;--border:#e0e0e0;--muted:#666;
+}
+html,body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--black);font-size:15px;line-height:1.5;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:200}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(13px,2vw,16px);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo-flag{width:18px;height:18px;min-width:18px;background:var(--red);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff}
+.nav-links{display:flex;gap:0;overflow:hidden}
+.nb{background:none;border:none;font-family:'Barlow',sans-serif;font-size:13px;color:var(--muted);padding:6px 10px;cursor:pointer;transition:color .15s;white-space:nowrap}
+.nb:hover,.nb.active{color:var(--black)}
+.nav-cta{background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;animation:pulse-cta 3s ease-in-out infinite}
+.nav-cta:hover{background:#c0001f}
+@keyframes pulse-cta{0%,100%{box-shadow:0 0 0 0 rgba(232,0,45,.3)}50%{box-shadow:0 0 0 6px rgba(232,0,45,0)}}
+/* mobile nav: hide text links, show only logo+cta */
+.nav-hamburger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px}
+.nav-hamburger span{display:block;width:20px;height:2px;background:var(--black)}
+.mobile-menu{display:none;position:fixed;top:52px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);z-index:199;flex-direction:column}
+.mobile-menu.open{display:flex}
+.mobile-menu .nb{padding:14px clamp(1rem,4vw,2rem);border-bottom:1px solid var(--border);text-align:left;font-size:15px}
+
+/* ── HERO ── */
+.hero{padding:clamp(2.5rem,6vw,5rem) clamp(1rem,4vw,2rem) clamp(2rem,5vw,3.5rem);border-bottom:1px solid var(--border)}
+.hero-tag{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+.hero-tag::before{content:'';display:block;width:24px;height:1px;background:var(--muted)}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(42px,10vw,100px);line-height:.93;letter-spacing:-1px;text-transform:uppercase;margin-bottom:clamp(1.25rem,3vw,2rem);max-width:800px}
+.hero h1 em{font-style:italic;color:var(--red)}
+.hero-desc{font-size:clamp(13px,1.6vw,15px);color:var(--muted);max-width:320px;font-weight:300;line-height:1.7;margin-bottom:2rem}
+.hero-btns{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn-blk{background:var(--black);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.4vw,14px);letter-spacing:.08em;text-transform:uppercase;padding:12px 22px;border:none;cursor:pointer}
+.btn-blk:hover{background:#333}
+.btn-ghost{background:none;color:var(--black);font-family:'Barlow',sans-serif;font-size:13px;padding:11px 16px;border:1px solid var(--border);cursor:pointer}
+.btn-ghost:hover{border-color:#999}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);margin-top:clamp(1.5rem,4vw,3rem)}
+.stat{padding:clamp(1rem,2.5vw,1.5rem) 0;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(20px,3.5vw,34px);color:var(--red)}
+.stat-l{font-size:clamp(9px,1vw,11px);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* ── MODULE NAV ── */
+.mod-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 clamp(1rem,4vw,2rem);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.mod-nav::-webkit-scrollbar{display:none}
+.mt{background:none;border:none;border-bottom:2px solid transparent;padding:14px 0;margin-right:clamp(1rem,3vw,2rem);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(10px,1.2vw,12px);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.mt:hover{color:var(--black)}
+.mt.active{color:var(--black);border-bottom-color:var(--red)}
+
+/* ── PAGES ── */
+.page{display:none;max-width:min(1000px,100%);margin:0 auto;padding:clamp(2rem,5vw,3rem) clamp(1rem,4vw,2rem)}
+.page.active{display:block}
+.sec-num{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,6vw,54px);line-height:.95;text-transform:uppercase;letter-spacing:-1px;margin-bottom:.5rem}
+.sec-title em{font-style:italic;color:var(--red)}
+.sec-sub{font-size:13px;color:var(--muted);font-weight:300;margin-bottom:2rem}
+
+/* ── FORMS ── */
+label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;font-weight:500}
+input[type=number],input[type=text],input[type=email],input[type=tel],select,textarea{
+  width:100%;padding:10px 12px;background:var(--white);border:1px solid var(--border);
+  font-family:'Barlow',sans-serif;font-size:14px;color:var(--black);outline:none;
+  transition:border-color .15s;border-radius:0;-webkit-appearance:none;appearance:none
+}
+input:focus,select:focus,textarea:focus{border-color:var(--black)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+textarea{resize:vertical;min-height:90px}
+input[type=range]{accent-color:var(--red);width:100%}
+
+/* ── GRIDS (responsive) ── */
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.card{background:var(--white);padding:clamp(1rem,3vw,1.5rem)}
+.card-inner{background:var(--gray);padding:clamp(1rem,3vw,1.5rem)}
+.card-border{background:var(--white);border:1px solid var(--border);padding:clamp(1rem,3vw,1.5rem)}
+
+/* ── RESULT PANELS ── */
+.r-panel{background:var(--black);padding:clamp(1.25rem,3vw,2rem);color:var(--white)}
+.r-panel-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(16px,2.5vw,22px);text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.25rem}
+.r-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid #222;font-size:clamp(12px,1.4vw,13px);gap:8px}
+.r-row:last-child{border-bottom:none}
+.rl{color:#888;flex-shrink:0}
+.rv{font-weight:500;color:var(--white);text-align:right}
+.r-total{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0 0;margin-top:8px;border-top:1px solid #333;gap:8px}
+.rt-l{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2vw,20px);font-weight:900;text-transform:uppercase;color:var(--red)}
+.rt-v{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2.5vw,24px);font-weight:900;color:var(--white)}
+.result-disclaimer{font-size:10px;color:#666;margin-top:10px;padding-top:10px;border-top:1px solid #222;line-height:1.6;font-style:italic}
+.result-disclaimer-light{font-size:10px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);line-height:1.6;font-style:italic}
+
+/* ── METRICS ── */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.metric{background:var(--gray);padding:clamp(.75rem,2vw,1.25rem)}
+.metric-v{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(18px,2.8vw,28px);color:var(--black)}
+.metric-l{font-size:clamp(8px,.9vw,10px);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.metric-red .metric-v{color:var(--red)}
+
+/* ── BARS ── */
+.bar-wrap{height:2px;background:#333;margin:6px 0 14px}
+.bar-fill{height:100%;transition:width .4s}
+.prog{height:2px;background:var(--border);margin-top:6px}
+.prog-fill{height:100%;background:var(--black);transition:width .4s}
+.pillar-wrap{display:flex;height:90px;gap:6px;align-items:flex-end;margin:1.5rem 0 .25rem}
+.pillar{flex:1;display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;font-size:10px;color:rgba(255,255,255,.7);font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:height .4s;min-height:4px}
+
+/* ── DISCLAIMER BANNER ── */
+.disclaimer-banner{background:#fffbeb;border:1px solid #fde68a;border-left:3px solid #f59e0b;padding:10px 14px;font-size:11px;color:#92400e;display:flex;align-items:flex-start;gap:8px;margin-bottom:1px;line-height:1.5}
+.disclaimer-banner strong{color:#78350f}
+.disclaimer-banner a{color:#78350f;font-weight:600}
+
+/* ── TIP ── */
+.tip{border-left:3px solid var(--red);padding:10px 14px;font-size:12px;color:var(--muted);margin-top:1.5rem;line-height:1.6}
+.tip strong{color:var(--black)}
+
+/* ── BUTTONS ── */
+.submit-btn{background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.6vw,14px);letter-spacing:.08em;text-transform:uppercase;padding:14px 28px;border:none;cursor:pointer;width:100%;margin-top:1.5rem;transition:background .15s}
+.submit-btn:hover{background:#c0001f}
+
+/* ── FEATURE CARDS ── */
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-bottom:1px}
+.feat-card{background:var(--white);padding:clamp(1.25rem,3vw,2rem);cursor:pointer;transition:border-color .15s}
+.feat-card:hover{background:var(--gray)}
+.feat-num{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.feat-card h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(20px,3vw,28px);text-transform:uppercase;letter-spacing:-.3px;margin-bottom:6px}
+.feat-card h3 em{font-style:italic;color:var(--red)}
+.feat-card p{font-size:clamp(11px,1.3vw,12px);color:var(--muted);line-height:1.6;font-weight:300}
+.feat-arrow{color:var(--muted);font-size:16px;margin-top:12px;display:block}
+.feat-card:hover .feat-arrow{color:var(--red)}
+
+/* ── STEPS ── */
+.step{padding:1.25rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:36px 1fr;gap:.75rem;align-items:start}
+.step:last-child{border-bottom:none}
+.step-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--red);padding-top:1px}
+.step-body h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(13px,1.6vw,15px);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.step-body p{font-size:clamp(11px,1.3vw,12px);color:var(--muted);font-weight:300;line-height:1.6}
+
+/* ── INSURANCE CARDS ── */
+.ins-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-bottom:1px}
+.ins-card{background:var(--white);padding:clamp(.875rem,2.5vw,1.25rem);cursor:pointer;transition:background .15s}
+.ins-card:hover,.ins-card.on{background:var(--gray)}
+.ins-rec{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--red)}
+
+/* ── CONTACT ── */
+.contact-hero{background:var(--black);padding:clamp(2rem,5vw,3rem) clamp(1rem,4vw,2rem);text-align:center;margin-bottom:1px}
+.contact-hero h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(36px,7vw,54px);text-transform:uppercase;letter-spacing:-1px;color:var(--white);margin-bottom:.5rem;line-height:.95}
+.contact-hero h2 em{font-style:italic;color:var(--red)}
+.contact-hero p{font-size:13px;color:#888;font-weight:300;margin-bottom:1.5rem}
+.badges-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.badge{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#888;border:1px solid #333;padding:5px 10px}
+.badge-w{color:var(--white);border-color:#555}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem);text-align:center;margin-top:2rem}
+footer p{font-size:11px;color:var(--muted);line-height:1.9}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--black)}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+───────────────────────────────────────── */
+
+/* TABLET — ≤ 768px */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .nav-hamburger{display:flex}
+
+  .hero h1{font-size:clamp(38px,12vw,60px)}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .hero-stats .stat:nth-child(2){border-right:none}
+  .hero-stats .stat:nth-child(3){border-right:1px solid var(--border)}
+  .hero-stats .stat:nth-child(3),.hero-stats .stat:nth-child(4){border-top:1px solid var(--border)}
+
+  .g2{grid-template-columns:1fr}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .feat-grid{grid-template-columns:1fr}
+  .ins-grid{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+
+  .r-panel-title{font-size:18px}
+  .sec-title{font-size:clamp(30px,9vw,44px)}
+}
+
+/* MOBILE — ≤ 480px */
+@media(max-width:480px){
+  .hero h1{font-size:clamp(32px,13vw,50px);letter-spacing:-.5px}
+  .hero-tag{font-size:10px}
+  .hero-desc{max-width:100%}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .stat-n{font-size:clamp(18px,6vw,28px)}
+
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+
+  .r-row{flex-direction:column;gap:2px}
+  .rv{text-align:left}
+  .r-total{flex-direction:column;gap:4px}
+
+  .feat-grid{grid-template-columns:1fr}
+
+  .sec-title{font-size:clamp(28px,10vw,40px)}
+  .submit-btn{font-size:13px;padding:13px 20px}
+
+  .badges-row{gap:6px}
+  .badge{font-size:9px;padding:4px 8px}
+
+  .steuer-bars{grid-template-columns:repeat(2,1fr) !important}
+}
+
+/* LARGE SCREEN / TV — ≥ 1400px */
+@media(min-width:1400px){
+  .page{max-width:1200px}
+  .hero h1{font-size:clamp(80px,7vw,120px)}
+  .hero-desc{max-width:420px;font-size:16px}
+  .stat-n{font-size:40px}
+  .sec-title{font-size:clamp(50px,5vw,72px)}
+  .r-panel-title{font-size:26px}
+  .metric-v{font-size:32px}
+  .feat-card h3{font-size:32px}
+  body{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><div class="logo-flag">✚</div>FINANZKOMPASS.CH</div>
+  <div class="nav-links">
+    <button class="nb active" onclick="pg('overview')">Übersicht</button>
+    <button class="nb" onclick="pg('budget')">Budget</button>
+    <button class="nb" onclick="pg('steuern')">Steuern</button>
+    <button class="nb" onclick="pg('saule3a')">Säule 3a</button>
+    <button class="nb" onclick="pg('versicherung')">Versicherung</button>
+    <button class="nb" onclick="pg('kontakt')">Beratung</button>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="nav-cta" onclick="pg('kontakt')">Kostenlos beraten lassen →</button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <button class="nb" onclick="pg('overview');closeMenu()">01 — Übersicht</button>
+  <button class="nb" onclick="pg('budget');closeMenu()">02 — Budgetplaner</button>
+  <button class="nb" onclick="pg('steuern');closeMenu()">03 — Steuerrechner</button>
+  <button class="nb" onclick="pg('saule3a');closeMenu()">04 — Säule 3a</button>
+  <button class="nb" onclick="pg('versicherung');closeMenu()">05 — Versicherung</button>
+  <button class="nb" onclick="pg('kontakt');closeMenu()">06 — Kostenlose Beratung</button>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+<div class="hero">
+  <div class="hero-tag">Ihre Schweizer Finanzplattform · Kostenlos</div>
+  <h1>DIE KLÜGSTE<br><em>ENTSCHEIDUNG</em><br>FÜR IHRE<br>FINANZEN.</h1>
+  <p class="hero-desc">Viele Schweizer zahlen jedes Jahr tausende Franken zu viel — an Steuern, Prämien und Versicherungen. Wir zeigen Ihnen wie Sie das ändern. Kostenlos.</p>
+  <div class="hero-btns">
+    <button class="btn-blk" onclick="pg('kontakt')" style="background:var(--red)">Kostenlose Beratung →</button>
+    <button class="btn-ghost" onclick="pg('budget')">Selber rechnen</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">26</div><div class="stat-l">Kantone abgedeckt</div></div>
+    <div class="stat"><div class="stat-n">CHF 0.—</div><div class="stat-l">Vollständig kostenlos</div></div>
+    <div class="stat"><div class="stat-n">24h</div><div class="stat-l">Offerte garantiert</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--black)">~</div><div class="stat-l">Einschätzung, keine Gewähr</div></div>
+  </div>
+</div>
+</div>
+<div style="background:var(--gray);border-top:1px solid var(--border);padding:.75rem clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:center;gap:clamp(1rem,4vw,3rem);flex-wrap:wrap">
+  <span style="font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:5px"><span style="color:var(--red);font-weight:700">✓</span> Keine Beratungsgebühr</span>
+  <span style="font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:5px"><span style="color:var(--red);font-weight:700">✓</span> FINMA-reguliert</span>
+  <span style="font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:5px"><span style="color:var(--red);font-weight:700">✓</span> Zürich · Swiss Life · KPT</span>
+  <span style="font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:5px"><span style="color:var(--red);font-weight:700">✓</span> Antwort innert 24h</span>
+</div>
+
+<!-- MODULE NAV -->
+<div class="mod-nav">
+  <button class="mt active" onclick="pg('overview')">01 — Übersicht</button>
+  <button class="mt" onclick="pg('budget')">02 — Budgetplaner</button>
+  <button class="mt" onclick="pg('steuern')">03 — Steuerrechner</button>
+  <button class="mt" onclick="pg('saule3a')">04 — Säule 3a</button>
+  <button class="mt" onclick="pg('versicherung')">05 — Versicherung</button>
+  <button class="mt" onclick="pg('kontakt')">06 — Beratung</button>
+</div>
+
+<!-- ══════ OVERVIEW ══════ -->
+<div class="page active" id="page-overview">
+  <div class="sec-num">01 — Module</div>
+  <div class="sec-title">WAS MÖCHTEN<br>SIE <em>HEUTE</em> TUN?</div>
+  <div class="sec-sub">Wählen Sie ein Modul oder starten Sie direkt mit dem Budgetplaner.</div>
+  <div class="feat-grid">
+    <div class="feat-card" onclick="pg('budget')">
+      <div class="feat-num">02</div><h3>BUDGET<em>PLANER</em></h3>
+      <p>Wo fliesst Ihr Geld hin? Viele merken erst beim Ausfüllen wo sie jeden Monat hunderte Franken verlieren. Sparquote berechnen, Kategorien sehen, sofort handeln.</p>
+      <div style="display:inline-block;background:var(--black);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;margin-top:.75rem">Budget analysieren →</div>
+    </div>
+    <div class="feat-card" onclick="pg('steuern')">
+      <div class="feat-num">03</div><h3>STEUERN <em>OPTIMIEREN</em></h3>
+      <p>Zahlen Sie zu viel Steuern? Je nach Gemeinde und Abzügen können Sie mehrere tausend Franken pro Jahr sparen — legal, einfach, sofort. Jetzt einschätzen.</p>
+      <div style="display:inline-block;background:var(--black);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;margin-top:.75rem">Steuern einschätzen →</div>
+    </div>
+    <div class="feat-card" onclick="pg('saule3a')">
+      <div class="feat-num">04</div><h3>SÄULE <em>3A</em></h3>
+      <p>Wer die Säule 3a nicht voll ausschöpft, verschenkt bares Geld. CHF 7'056 einzahlen, Steuern sparen, Kapital aufbauen — sehen Sie was das für Sie bedeutet.</p>
+      <div style="display:inline-block;background:var(--black);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;margin-top:.75rem">Ersparnis berechnen →</div>
+    </div>
+    <div class="feat-card" onclick="pg('kontakt')">
+      <div class="feat-num">06</div><h3>PERSÖNLICHE <em>BERATUNG</em></h3>
+      <p>Kostenlos, unverbindlich, innert 24h. Wir analysieren Ihre Situation ganzheitlich — Steuern, Vorsorge und Versicherung zusammen. Das macht den Unterschied.</p>
+      <div style="display:inline-block;background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;margin-top:.75rem">Jetzt anfragen →</div>
+    </div>
+  </div>
+  <div style="background:var(--red);padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1px">
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(20px,3.5vw,30px);text-transform:uppercase;color:var(--white);margin-bottom:4px">LIEBER DIREKT BERATEN LASSEN?</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.75);font-weight:300">Kostenlos, unverbindlich, innert 24h — persönlich auf Ihre Situation zugeschnitten.</div>
+    </div>
+    <button onclick="pg('kontakt')" style="background:var(--white);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(13px,1.8vw,16px);letter-spacing:.08em;text-transform:uppercase;padding:14px 28px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">JETZT TERMIN ANFRAGEN →</button>
+  </div>
+</div>
+
+<!-- ══════ BUDGET ══════ -->
+<div class="page" id="page-budget">
+  <div class="sec-num">02 — Budgetplaner</div>
+  <div class="sec-title">WO FLIESST<br>IHR <em>GELD HIN?</em></div>
+  <div class="sec-sub">Einnahmen und Ausgaben strukturiert erfassen.</div>
+  <div class="disclaimer-banner">⚠ <span><strong>Einschätzung:</strong> Alle Werte basieren auf Ihren Eingaben. Keine verbindliche Finanzberatung.</span></div>
+  <div class="g2" style="margin-bottom:1px">
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px">Einnahmen / Monat</div>
+      <div style="display:grid;gap:10px">
+        <div><label>Nettolohn</label><input type="number" id="b-lohn" value="5500" oninput="cB()"></div>
+        <div><label>Partner/in</label><input type="number" id="b-part" value="0" oninput="cB()"></div>
+        <div><label>Mieteinnahmen</label><input type="number" id="b-mein" value="0" oninput="cB()"></div>
+        <div><label>Übriges</label><input type="number" id="b-ubr" value="0" oninput="cB()"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px">Fixkosten / Monat</div>
+      <div style="display:grid;gap:10px">
+        <div><label>Miete / Hypothek</label><input type="number" id="b-miete" value="1800" oninput="cB()"></div>
+        <div><label>Krankenkasse</label><input type="number" id="b-kk" value="420" oninput="cB()"></div>
+        <div><label>Steuern (Monat)</label><input type="number" id="b-st" value="600" oninput="cB()"></div>
+        <div><label>Versicherungen</label><input type="number" id="b-vers" value="150" oninput="cB()"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-border" style="margin-bottom:1px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px">Variable Kosten / Monat</div>
+    <div class="g4">
+      <div><label>Lebensmittel</label><input type="number" id="b-food" value="600" oninput="cB()"></div>
+      <div><label>Mobilität</label><input type="number" id="b-mob" value="250" oninput="cB()"></div>
+      <div><label>Freizeit</label><input type="number" id="b-frei" value="300" oninput="cB()"></div>
+      <div><label>Kommunikation</label><input type="number" id="b-kom" value="100" oninput="cB()"></div>
+      <div><label>Kleidung</label><input type="number" id="b-kleid" value="150" oninput="cB()"></div>
+      <div><label>Bildung</label><input type="number" id="b-bild" value="0" oninput="cB()"></div>
+      <div><label>Sparen / 3a</label><input type="number" id="b-spar" value="400" oninput="cB()"></div>
+      <div><label>Sonstiges</label><input type="number" id="b-sonst" value="200" oninput="cB()"></div>
+    </div>
+  </div>
+  <div class="g2" style="background:var(--border)">
+    <div class="r-panel">
+      <div class="r-panel-title">Übersicht</div>
+      <div class="r-row"><span class="rl">Einnahmen</span><span class="rv" id="br-ein">—</span></div>
+      <div class="r-row"><span class="rl">Fixkosten</span><span class="rv" id="br-fix">—</span></div>
+      <div class="r-row"><span class="rl">Variable Kosten</span><span class="rv" id="br-var">—</span></div>
+      <div class="r-row"><span class="rl">Sparbetrag</span><span class="rv" id="br-spar">—</span></div>
+      <div class="r-total"><span class="rt-l">Frei</span><span class="rt-v" id="br-frei">—</span></div>
+      <div class="result-disclaimer">Einschätzung basierend auf Eingaben. Keine verbindliche Finanzberatung.</div>
+    </div>
+    <div class="card-inner">
+      <div id="bud-cats"></div>
+      <div id="bud-tip" class="tip" style="display:none"></div>
+      <button class="submit-btn" onclick="pg('steuern')">Steueroptimierung prüfen →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ STEUERN ══════ -->
+<div class="page" id="page-steuern">
+  <div class="sec-num">03 — Steuerrechner</div>
+  <div class="sec-title">WIE VIEL ZAHLEN<br>SIE ZU <em>VIEL?</em></div>
+  <div class="sec-sub">Alle 26 Kantone · Gemeindesteuer · Steuerjahr 2024.</div>
+  <div class="disclaimer-banner">⚠ <span><strong>Wichtiger Hinweis:</strong> Diese Berechnung ist eine <strong>Einschätzung</strong> basierend auf vereinfachten Tarifen. Verbindliche Auskunft: <a href="https://www.estv.admin.ch" target="_blank">estv.admin.ch</a> oder persönliche Beratung.</span></div>
+  <div class="g2" style="background:var(--border);margin-top:1px;margin-bottom:1px">
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px">Persönliches</div>
+      <div style="display:grid;gap:10px">
+        <div><label>Zivilstand</label><select id="s-ziv" onchange="cS()"><option value="ledig">Ledig</option><option value="verheiratet">Verheiratet</option><option value="alleinerziehend">Alleinerziehend</option></select></div>
+        <div><label>Konfession</label><select id="s-konf" onchange="cS()"><option value="ref">Reformiert</option><option value="rk">Römisch-katholisch</option><option value="keine">Keine / andere</option></select></div>
+        <div><label>Kanton</label><select id="s-kt" onchange="uG();cS()"></select></div>
+        <div><label>Gemeinde</label><select id="s-gm" onchange="cS()"></select></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px">Einkommen & Abzüge / Jahr</div>
+      <div style="display:grid;gap:10px">
+        <div><label>Bruttolohn (CHF)</label><input type="number" id="s-lohn" value="85000" oninput="cS()"></div>
+        <div><label>Übriges Einkommen (CHF)</label><input type="number" id="s-neb" value="0" oninput="cS()"></div>
+        <div><label>Säule 3a, max. 7'056 (CHF)</label><input type="number" id="s-3a" value="7056" oninput="cS()"></div>
+        <div><label>Krankenkasse (CHF)</label><input type="number" id="s-kk" value="5040" oninput="cS()"></div>
+        <div><label>Berufskosten (CHF)</label><input type="number" id="s-bk" value="2400" oninput="cS()"></div>
+      </div>
+    </div>
+  </div>
+  <div class="r-panel" style="margin-bottom:1px">
+    <div class="r-panel-title">~ Steuereinschätzung</div>
+    <div class="steuer-bars" style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.75rem,2vw,1.5rem);margin-bottom:1.5rem">
+      <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#666;margin-bottom:6px">~ Bundessteuer</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(18px,2.5vw,28px)" id="sr-bund">—</div><div class="bar-wrap"><div class="bar-fill" id="sb-bund" style="background:#555;width:0%"></div></div></div>
+      <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#666;margin-bottom:6px">~ Kantonssteuer</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(18px,2.5vw,28px)" id="sr-kant">—</div><div class="bar-wrap"><div class="bar-fill" id="sb-kant" style="background:#777;width:0%"></div></div></div>
+      <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#666;margin-bottom:6px">~ Gemeindesteuer</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(18px,2.5vw,28px)" id="sr-gem">—</div><div class="bar-wrap"><div class="bar-fill" id="sb-gem" style="background:#999;width:0%"></div></div></div>
+      <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#666;margin-bottom:6px">~ Kirchensteuer</div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(18px,2.5vw,28px)" id="sr-kirch">—</div><div class="bar-wrap"><div class="bar-fill" id="sb-kirch" style="background:#444;width:0%"></div></div></div>
+    </div>
+    <div class="r-row"><span class="rl">~ Steuerbares Einkommen</span><span class="rv" id="sr-stb">—</span></div>
+    <div class="r-row"><span class="rl">~ Effektive Steuerbelastung</span><span class="rv" id="sr-rate">—</span></div>
+    <div class="r-row"><span class="rl">~ Grenzsteuersatz</span><span class="rv" id="sr-grz">—</span></div>
+    <div class="r-total"><span class="rt-l">~ Total / Jahr</span><span class="rt-v" id="sr-tot">—</span></div>
+    <div class="result-disclaimer">Einschätzung — keine verbindliche Steuerauskunft. Abweichungen möglich. Verbindlich: ESTV-Steuerrechner oder persönliche Beratung.</div>
+  </div>
+  <div class="metrics-grid" style="margin-bottom:1px">
+    <div class="metric"><div class="metric-v" id="sm-n">—</div><div class="metric-l">~ Netto / Jahr</div></div>
+    <div class="metric"><div class="metric-v" id="sm-m">—</div><div class="metric-l">~ Netto / Monat</div></div>
+    <div class="metric metric-red"><div class="metric-v" id="sm-3">—</div><div class="metric-l">~ Ersparnis 3a</div></div>
+    <div class="metric"><div class="metric-v" id="sm-sm">—</div><div class="metric-l">~ Steuern / Monat</div></div>
+  </div>
+  <div class="tip" id="st-tip"></div>
+  <div style="background:var(--black);border-left:4px solid var(--red);padding:clamp(1rem,3vw,1.5rem);margin-top:1px;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+    <div style="font-size:13px;color:rgba(255,255,255,.8);font-weight:300;line-height:1.6"><strong style="color:var(--white);font-weight:500">Diese Zahlen sind Einschätzungen.</strong> In einer persönlichen Beratung zeigen wir Ihnen Ihre genauen Optimierungsmöglichkeiten — mit konkreten Massnahmen, die Sie sofort umsetzen können.</div>
+    <button onclick="pg('kontakt')" style="background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:11px 22px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">STEUEROPTIMIERUNG ANFRAGEN →</button>
+  </div>
+  <button onclick="pg('saule3a')" style="background:var(--black);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;padding:14px 28px;border:none;cursor:pointer;width:100%;margin-top:1px">Weiter: Säule 3a optimieren →</button>
+</div>
+
+<!-- ══════ SÄULE 3A ══════ -->
+<div class="page" id="page-saule3a">
+  <div class="sec-num">04 — Säule 3a</div>
+  <div class="sec-title">SIE VERSCHENKEN<br><em>BARES GELD.</em></div>
+  <div class="sec-sub">Jeder Franken in die Säule 3a spart Steuern und baut Kapital auf. Sehen Sie jetzt wie viel.</div>
+  <div class="disclaimer-banner">⚠ <span><strong>Einschätzung:</strong> Steuerersparnis basiert auf vereinfachten Tarifen. Tatsächliche Renditen können abweichen. Keine Anlageberatung.</span></div>
+  <div class="g2" style="background:var(--border);margin-top:1px;margin-bottom:1px">
+    <div class="card">
+      <div style="display:grid;gap:14px">
+        <div><label>Kanton</label>
+          <select id="p-kt" onchange="c3()">
+            <option value="BE">Bern</option><option value="ZH">Zürich</option>
+            <option value="ZG">Zug</option><option value="LU">Luzern</option>
+            <option value="AG">Aargau</option><option value="SG">St. Gallen</option>
+            <option value="BS">Basel-Stadt</option><option value="BL">Basel-Land</option>
+            <option value="SO">Solothurn</option><option value="TG">Thurgau</option>
+          </select>
+        </div>
+        <div><label>Steuerbares Einkommen (CHF)</label><input type="number" id="p-eink" value="85000" oninput="c3()"></div>
+        <div>
+          <label>Jährliche Einzahlung — <span id="p-ev" style="color:var(--red);font-weight:700">CHF 7'056</span></label>
+          <input type="range" id="p-einz" min="0" max="7056" value="7056" step="100" oninput="c3();document.getElementById('p-ev').textContent='CHF '+parseInt(this.value).toLocaleString('de-CH')">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:2px"><span>CHF 0</span><span>Max CHF 7'056</span></div>
+        </div>
+        <div>
+          <label>Anlagehorizont — <span id="p-jv" style="color:var(--red);font-weight:700">20 Jahre</span></label>
+          <input type="range" id="p-jahr" min="1" max="40" value="20" step="1" oninput="c3();document.getElementById('p-jv').textContent=this.value+' Jahre'">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:2px"><span>1 Jahr</span><span>40 Jahre</span></div>
+        </div>
+        <div>
+          <label>Rendite p.a. — <span id="p-rv" style="color:var(--red);font-weight:700">3.0 %</span></label>
+          <input type="range" id="p-rend" min="0" max="8" value="3" step="0.5" oninput="c3();document.getElementById('p-rv').textContent=parseFloat(this.value).toFixed(1)+' %'">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:2px"><span>Konto 0%</span><span>Aktien ~7%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="r-panel">
+      <div class="r-panel-title">~ Ihre 3a-Einschätzung</div>
+      <div class="r-row"><span class="rl">~ Steuerersparnis / Jahr</span><span class="rv" id="p-js">—</span></div>
+      <div class="r-row"><span class="rl">~ Steuerersparnis total</span><span class="rv" id="p-ts">—</span></div>
+      <div class="r-row"><span class="rl">Eingezahltes Kapital</span><span class="rv" id="p-kap">—</span></div>
+      <div class="r-row"><span class="rl">~ Kapital inkl. Zinsen</span><span class="rv" id="p-kapz">—</span></div>
+      <div class="r-row"><span class="rl">~ Zinsertrag</span><span class="rv" id="p-ert">—</span></div>
+      <div class="r-total"><span class="rt-l">~ Gesamtvorteil</span><span class="rt-v" id="p-ges">—</span></div>
+      <div class="pillar-wrap" id="p-bar"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;font-size:9px;text-align:center;color:#555;text-transform:uppercase;letter-spacing:.06em"><span>Einzahlungen</span><span>~ Zinsen</span><span>~ Steuerersparnis</span></div>
+      <div class="result-disclaimer">Einschätzung — keine Anlageberatung. Renditen sind Annahmen.</div>
+    </div>
+  </div>
+  <div style="background:var(--red);padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1px">
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(18px,3vw,26px);text-transform:uppercase;color:var(--white);margin-bottom:4px">DIE RICHTIGE STRATEGIE MACHT DEN UNTERSCHIED.</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.75);font-weight:300">Wir zeigen Ihnen welches Produkt (Konto vs. Wertschriften) zu Ihrer Situation passt — kostenlos, in 30 Minuten.</div>
+    </div>
+    <button onclick="pg('kontakt')" style="background:var(--white);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(13px,1.8vw,15px);letter-spacing:.08em;text-transform:uppercase;padding:14px 28px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">3A-STRATEGIE BESPRECHEN →</button>
+  </div>
+</div>
+
+<!-- ══════ VERSICHERUNG ══════ -->
+<div class="page" id="page-versicherung">
+  <div class="sec-num">05 — Versicherung</div>
+  <div class="sec-title">SIND SIE WIRKLICH<br><em>GUT GESCHÜTZT?</em></div>
+  <div class="sec-sub">2 Minuten — und Sie wissen ob Sie zu viel bezahlen oder wichtige Lücken haben.</div>
+  <div class="disclaimer-banner">⚠ <span><strong>Einschätzung:</strong> Empfehlungen basieren auf allgemeinen Richtwerten. Für eine individuelle Analyse empfehlen wir eine persönliche Beratung.</span></div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1rem 0 1.5rem">
+    <div><label>Alter</label><input type="number" id="v-alt" value="35" oninput="cV()"></div>
+    <div><label>Haushalt</label><select id="v-hh" onchange="cV()"><option value="single">Single</option><option value="paar">Paar ohne Kinder</option><option value="familie">Familie mit Kindern</option></select></div>
+  </div>
+  <div class="ins-grid" id="v-grid"></div>
+  <div class="card-border">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">~ Empfehlungen</div>
+    <div id="v-empf"></div>
+  </div>
+  <div style="background:var(--red);padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1px">
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(18px,3vw,26px);text-transform:uppercase;color:var(--white);margin-bottom:4px">WIR PRÜFEN IHREN SCHUTZ IM DETAIL.</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.75);font-weight:300">Kostenloser Versicherungscheck mit konkreten Angeboten von Zürich Versicherung, Swiss Life & KPT.</div>
+    </div>
+    <button onclick="pg('kontakt')" style="background:var(--white);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(13px,1.8vw,15px);letter-spacing:.08em;text-transform:uppercase;padding:14px 28px;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0">KOSTENLOSEN CHECK ANFRAGEN →</button>
+  </div>
+</div>
+
+<!-- ══════ KONTAKT ══════ -->
+<div class="page" id="page-kontakt">
+  <div class="contact-hero">
+    <div class="sec-num" style="color:#555;text-align:center;margin-bottom:1rem">06 — Beratung</div>
+    <h2>IN 24h ZU IHRER<br><em>PERSÖNLICHEN</em><br>BERATUNG.</h2>
+    <p>Unverbindlich · Persönlich · Innert 24h</p>
+    <div class="badges-row">
+      <span class="badge badge-w">✓ Keine Gebühr</span>
+      <span class="badge">✓ Antwort innert 24h</span>
+      <span class="badge">✓ FINMA-reguliert</span>
+    </div>
+  </div>
+  <div class="g2" style="background:var(--border)">
+    <div class="card">
+      <div style="display:grid;gap:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label>Vorname</label><input type="text" id="k-vn" placeholder="Max"></div>
+          <div><label>Nachname</label><input type="text" id="k-nn" placeholder="Muster"></div>
+        </div>
+        <div><label>E-Mail</label><input type="email" id="k-em" placeholder="max@beispiel.ch"></div>
+        <div><label>Telefon</label><input type="tel" id="k-tel" placeholder="+41 79 000 00 00"></div>
+        <div><label>Wohnort / Kanton</label><input type="text" id="k-ort" placeholder="Bern, BE"></div>
+        <div><label>Thema</label>
+          <select id="k-thema">
+            <option>Krankenversicherung (KVG / VVG)</option>
+            <option>Lebensversicherung / Vorsorge</option>
+            <option>Säule 3a Strategie</option>
+            <option>Steueroptimierung</option>
+            <option>Hausrat / Haftpflicht</option>
+            <option>Gesamtberatung Finanzen</option>
+          </select>
+        </div>
+        <div><label>Bevorzugte Kontaktzeit</label>
+          <select><option>Morgens 8–12h</option><option>Mittags 12–14h</option><option>Nachmittags 14–17h</option><option>Abends ab 17h</option></select>
+        </div>
+        <div><label>Nachricht (optional)</label><textarea placeholder="Was beschäftigt Sie? Gerne auch Bezug auf Ihre Steuereinschätzung nehmen."></textarea></div>
+        <button class="submit-btn" onclick="submitForm()">JETZT KOSTENLOS BERATEN LASSEN →</button>
+        <div id="k-ok" style="display:none;background:var(--gray);border-left:4px solid var(--red);padding:14px;font-size:13px;line-height:1.7"><strong style="font-family:'Barlow Condensed',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:.05em">✓ Anfrage erhalten!</strong><br>Wir melden uns innert 24h persönlich bei Ihnen. Versprochen.</div>
+      </div>
+    </div>
+    <div class="card-inner">
+      <div class="step"><span class="step-num">01</span><div class="step-body"><h4>Gebundener Vermittler</h4><p>Produkte von Zürich Versicherung, Swiss Life & KPT — abgestimmt auf Ihre Situation.</p></div></div>
+      <div class="step"><span class="step-num">02</span><div class="step-body"><h4>FINMA-reguliert</h4><p>Als registrierter Versicherungsvermittler handeln wir nach Schweizer Recht.</p></div></div>
+      <div class="step"><span class="step-num">03</span><div class="step-body"><h4>Verbindliche Zahlen</h4><p>Unsere Tools liefern Einschätzungen. In der persönlichen Beratung erhalten Sie exakte, individuelle Zahlen.</p></div></div>
+      <div class="step" style="border-bottom:none"><span class="step-num">04</span><div class="step-body"><h4>Gümligen BE</h4><p>Persönlich erreichbar, ganze Deutschschweiz. Montag–Freitag 8–18h.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">FINANZKOMPASS.CH</div>
+  <p>Alle Berechnungen sind <strong>Einschätzungen</strong> und ersetzen keine persönliche Beratung oder verbindliche Steuerauskunft.<br>
+  Steuerdaten basieren auf vereinfachten kantonalen Tarifen 2024 · Verbindliche Auskunft: <a href="https://www.estv.admin.ch" target="_blank">estv.admin.ch</a><br>
+  <a href="#">Datenschutz</a> · <a href="#">Impressum</a> · Gebundener Versicherungsvermittler, Kehrsatz BE</p>
+</footer>
+
+<script>
+// ── DATA ──
+const KT={
+  "AG":{n:"Aargau",kf:100,ki:{ref:18,rk:15},g:{"Aarau":104,"Baden":100,"Rheinfelden":108,"Wettingen":112,"Zofingen":110}},
+  "AI":{n:"Appenzell I.",kf:65,ki:{ref:0,rk:10},g:{"Appenzell":65,"Gonten":68,"Rüte":67}},
+  "AR":{n:"Appenzell A.",kf:97,ki:{ref:14,rk:12},g:{"Herisau":96,"Heiden":99,"Speicher":93,"Teufen":94}},
+  "BE":{n:"Bern",kf:318,ki:{ref:21.8,rk:18.5},g:{"Belp":143,"Bern":154,"Biel":165,"Bolligen":156,"Gümligen":147,"Ittigen":148,"Kehrsatz":142,"Köniz":157,"Köniz":157,"Langnau":158,"Münsingen":155,"Ostermundigen":159,"Thun":152,"Worb":150}},
+  "BL":{n:"Basel-Land",kf:73,ki:{ref:14,rk:13},g:{"Allschwil":62,"Arlesheim":55,"Binningen":58,"Muttenz":64,"Oberwil":57,"Reinach":63}},
+  "BS":{n:"Basel-Stadt",kf:100,ki:{ref:12,rk:10},g:{"Basel":100,"Bettingen":100,"Riehen":100}},
+  "FR":{n:"Freiburg",kf:100,ki:{ref:10,rk:8},g:{"Bulle":68,"Düdingen":60,"Freiburg":71,"Murten":65,"Romont":73}},
+  "GE":{n:"Genf",kf:100,ki:{ref:0,rk:0},g:{"Carouge":45.5,"Genf":45.5,"Meyrin":45.5,"Onex":45.5,"Vernier":45.5}},
+  "GL":{n:"Glarus",kf:100,ki:{ref:12,rk:10},g:{"Glarus":98,"Glarus Nord":95,"Glarus Süd":102}},
+  "GR":{n:"Graubünden",kf:100,ki:{ref:13,rk:11},g:{"Chur":100,"Davos":90,"Disentis":110,"Ilanz":108,"St. Moritz":75}},
+  "JU":{n:"Jura",kf:100,ki:{ref:0,rk:0},g:{"Delémont":55,"Porrentruy":57,"Saignelégier":53}},
+  "LU":{n:"Luzern",kf:95,ki:{ref:19,rk:16},g:{"Emmen":72,"Horw":50,"Kriens":65,"Küssnacht":68,"Luzern":60,"Meggen":40,"Sursee":62}},
+  "NE":{n:"Neuenburg",kf:100,ki:{ref:0,rk:0},g:{"Boudry":82,"La Chaux-de-Fonds":90,"Le Locle":88,"Neuenburg":85}},
+  "NW":{n:"Nidwalden",kf:65,ki:{ref:0,rk:12},g:{"Buochs":65,"Ennetbürgen":63,"Hergiswil":60,"Stans":62}},
+  "OW":{n:"Obwalden",kf:70,ki:{ref:0,rk:11},g:{"Engelberg":72,"Giswil":73,"Kerns":70,"Sarnen":68}},
+  "SG":{n:"St. Gallen",kf:115,ki:{ref:18,rk:15},g:{"Arbon":120,"Buchs":113,"Gossau":118,"Rapperswil-Jona":112,"Rorschach":122,"St. Gallen":116,"Wil":115}},
+  "SH":{n:"Schaffhausen",kf:90,ki:{ref:17,rk:14},g:{"Neuhausen":80,"Schaffhausen":82,"Thayngen":87}},
+  "SO":{n:"Solothurn",kf:107,ki:{ref:18,rk:15},g:{"Bellach":108,"Grenchen":115,"Langendorf":98,"Olten":112,"Solothurn":100}},
+  "SZ":{n:"Schwyz",kf:72,ki:{ref:0,rk:12},g:{"Arth":73,"Freienbach":60,"Ingenbohl":72,"Schwyz":68,"Wollerau":50}},
+  "TG":{n:"Thurgau",kf:115,ki:{ref:19,rk:16},g:{"Amriswil":119,"Arbon":115,"Frauenfeld":112,"Kreuzlingen":118,"Weinfelden":116}},
+  "TI":{n:"Tessin",kf:100,ki:{ref:0,rk:0},g:{"Ascona":70,"Bellinzona":82,"Chiasso":83,"Locarno":80,"Lugano":75,"Mendrisio":78}},
+  "UR":{n:"Uri",kf:90,ki:{ref:0,rk:13},g:{"Altdorf":88,"Attinghausen":92,"Bürglen":90,"Schattdorf":89}},
+  "VD":{n:"Waadt",kf:155.5,ki:{ref:0,rk:0},g:{"Lausanne":79.5,"Morges":73.5,"Nyon":72,"Prilly":77,"Renens":81,"Yverdon":80.5}},
+  "VS":{n:"Wallis",kf:100,ki:{ref:0,rk:0},g:{"Brig":102,"Martigny":103,"Monthey":105,"Sierre":95,"Sion":100,"Visp":98}},
+  "ZG":{n:"Zug",kf:82,ki:{ref:16,rk:14},g:{"Baar":60,"Cham":55,"Hünenberg":57,"Risch":52,"Steinhausen":54,"Unterägeri":63,"Wollerau":50,"Zug":58}},
+  "ZH":{n:"Zürich",kf:100,ki:{ref:12,rk:10},g:{"Adliswil":108,"Dübendorf":116,"Egg":109,"Horgen":110,"Kilchberg":91,"Küsnacht":89,"Männedorf":107,"Regensdorf":113,"Thalwil":105,"Uster":115,"Winterthur":122,"Zollikon":92,"Zürich":119}}
+};
+
+// ── NAVIGATION ──
+function pg(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb,.mt').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('[onclick*="pg(\''+id+'\'"]').forEach(b=>b.classList.add('active'));
+  document.getElementById('hero').style.display=id==='overview'?'block':'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleMenu(){document.getElementById('mobile-menu').classList.toggle('open');}
+function closeMenu(){document.getElementById('mobile-menu').classList.remove('open');}
+document.addEventListener('click',e=>{if(!e.target.closest('nav')&&!e.target.closest('.mobile-menu'))closeMenu();});
+
+// ── UTILS ──
+function F(n){return Math.round(n).toLocaleString('de-CH');}
+function P(n){return n.toFixed(1)+' %';}
+function s(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function gv(id){return+(document.getElementById(id)?.value)||0;}
+
+// ── BUDGET ──
+function cB(){
+  const ein=gv('b-lohn')+gv('b-part')+gv('b-mein')+gv('b-ubr');
+  const fix=gv('b-miete')+gv('b-kk')+gv('b-st')+gv('b-vers');
+  const va=gv('b-food')+gv('b-mob')+gv('b-frei')+gv('b-kom')+gv('b-kleid')+gv('b-bild')+gv('b-sonst');
+  const sp=gv('b-spar'),fr=ein-fix-va-sp;
+  s('br-ein','CHF '+F(ein));s('br-fix','CHF '+F(fix));s('br-var','CHF '+F(va));s('br-spar','CHF '+F(sp));
+  const el=document.getElementById('br-frei');
+  el.textContent=(fr>=0?'+ ':'')+'CHF '+F(fr);
+  el.style.color=fr>=0?'#fff':'var(--red)';
+  const cats=[
+    {n:'Wohnen',v:gv('b-miete')},{n:'Krankenkasse',v:gv('b-kk')},{n:'Steuern',v:gv('b-st')},
+    {n:'Lebensmittel',v:gv('b-food')},{n:'Mobilität',v:gv('b-mob')},{n:'Freizeit',v:gv('b-frei')},
+    {n:'Sparen/3a',v:sp},{n:'Sonstiges',v:gv('b-kleid')+gv('b-kom')+gv('b-bild')+gv('b-sonst')}
+  ].filter(c=>c.v>0);
+  const tot=cats.reduce((a,c)=>a+c.v,0)||1;
+  document.getElementById('bud-cats').innerHTML=cats.map(c=>`
+    <div style="padding:7px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;gap:8px">
+        <span style="color:var(--muted)">${c.n}</span>
+        <span style="font-weight:500;white-space:nowrap">CHF ${F(c.v)} <span style="color:var(--muted);font-size:10px">${(c.v/tot*100).toFixed(0)}%</span></span>
+      </div>
+      <div class="prog"><div class="prog-fill" style="width:${c.v/tot*100}%"></div></div>
+    </div>`).join('');
+  const sq=ein>0?sp/ein*100:0,tip=document.getElementById('bud-tip');
+  if(sq<10&&ein>0){tip.style.display='block';tip.innerHTML=`<strong>Tipp:</strong> Sparquote ${sq.toFixed(1)} % — mind. 10–20 % empfohlen. Säule 3a spart zusätzlich Steuern.`;}
+  else tip.style.display='none';
+}
+
+// ── STEUER INIT ──
+function initKt(){
+  const sel=document.getElementById('s-kt');
+  Object.entries(KT).sort((a,b)=>a[1].n.localeCompare(b[1].n)).forEach(([k,v])=>{
+    const o=document.createElement('option');
+    o.value=k;o.textContent=v.n+' ('+k+')';
+    if(k==='BE')o.selected=true;
+    sel.appendChild(o);
+  });
+  uG();
+}
+function uG(){
+  const k=document.getElementById('s-kt').value,sel=document.getElementById('s-gm');
+  sel.innerHTML='';
+  Object.entries(KT[k]?.g||{}).sort().forEach(([nm,f])=>{
+    const o=document.createElement('option');o.value=f;o.textContent=nm+' ('+f+' %)';
+    if(nm==='Kehrsatz')o.selected=true;
+    sel.appendChild(o);
+  });
+}
+
+// ── STEUER TARIFE ──
+function bL(e){
+  const t=[[0,14500,0,0],[14500,31600,.77,0],[31600,41400,.88,112.1],[41400,55200,2.64,343.5],[55200,72500,2.97,818.1],[72500,78100,5.94,2831.1],[78100,103600,6.6,4167.3],[103600,134600,8.8,6720.9],[134600,176000,11,11494.5],[176000,755200,13.2,21055.9],[755200,9e9,11.5,149947.4]];
+  for(const[a,b,r,bs]of t)if(e<=b)return bs+(e-a)*r/100;return 0;
+}
+function bV(e){
+  const t=[[0,28300,0,0],[28300,50900,1,0],[50900,58400,2,226],[58400,75300,3,376],[75300,90300,4,883],[90300,103400,5,1483],[103400,114700,6,2138],[114700,124200,7,2816],[124200,131700,8,3481],[131700,141200,9,4081],[141200,155400,10,4936],[155400,176100,11,6356],[176100,755200,11.5,8566.7],[755200,9e9,11.5,75453.4]];
+  for(const[a,b,r,bs]of t)if(e<=b)return bs+(e-a)*r/100;return 0;
+}
+function kP(e,k){
+  const T={
+    "ZH":[[0,6700,0],[6700,11500,2],[11500,16300,3],[16300,24500,4],[24500,33000,5],[33000,43500,6],[43500,56000,7],[56000,9e9,9]],
+    "BE":[[0,13100,0],[13100,18400,.75],[18400,25400,1.5],[25400,33700,2.25],[33700,44800,3],[44800,60100,3.75],[60100,79700,4.5],[79700,107000,5.25],[107000,9e9,6.5]],
+    "LU":[[0,12400,0],[12400,17800,1],[17800,26200,2],[26200,41100,3],[41100,61500,4],[61500,90000,5],[90000,9e9,6.5]],
+    "ZG":[[0,10500,0],[10500,15600,1],[15600,22400,2],[22400,33800,3],[33800,9e9,5]],
+    "SZ":[[0,12600,0],[12600,19200,2],[19200,29000,3],[29000,9e9,6]],
+    "BL":[[0,13200,0],[13200,20000,2],[20000,29900,3],[29900,9e9,6]],
+    "BS":[[0,12400,0],[12400,18400,1.5],[18400,27300,2.5],[27300,40500,3.5],[40500,84600,6],[84600,9e9,7.5]],
+    "AG":[[0,12200,0],[12200,18500,1.5],[18500,27900,2.5],[27900,9e9,5.5]],
+    "SO":[[0,12600,0],[12600,19300,2],[19300,29400,3],[29400,9e9,7]],
+    "SH":[[0,11600,0],[11600,17700,1.5],[17700,26500,2.5],[26500,9e9,6.5]],
+    "SG":[[0,12000,0],[12000,18100,2],[18100,27000,3],[27000,9e9,6]],
+    "TG":[[0,11500,0],[11500,17500,2],[17500,26100,3],[26100,9e9,6]],
+    "GR":[[0,10000,0],[10000,15200,1.5],[15200,22900,2.5],[22900,9e9,7]],
+    "TI":[[0,13000,0],[13000,19800,1],[19800,29600,2],[29600,45000,3.5],[45000,9e9,6.5]],
+    "VD":[[0,14800,0],[14800,22500,1.5],[22500,33800,2.5],[33800,9e9,6.5]],
+    "VS":[[0,12800,0],[12800,19500,1.5],[19500,29300,2.5],[29300,9e9,6.5]],
+    "GE":[[0,14900,0],[14900,22700,1],[22700,34200,2],[34200,9e9,6.5]],
+    "NE":[[0,13600,0],[13600,20700,2],[20700,31100,3.5],[31100,9e9,6]],
+    "FR":[[0,14500,0],[14500,20900,2],[20900,31400,3],[31400,9e9,8.5]],
+    "JU":[[0,14300,0],[14300,21600,2],[21600,32400,3.5],[32400,9e9,6.5]],
+    "GL":[[0,12000,0],[12000,18100,2],[18100,9e9,6]],
+    "AR":[[0,13700,0],[13700,20700,1.5],[20700,9e9,5.5]],
+    "AI":[[0,10500,0],[10500,15700,1],[15700,9e9,5]],
+    "UR":[[0,10500,0],[10500,15900,1],[15900,9e9,6]],
+    "OW":[[0,12200,0],[12200,18500,1.5],[18500,9e9,5.5]],
+    "NW":[[0,13600,0],[13600,20800,2],[20800,9e9,6]]
+  };
+  const st=T[k]||[[0,12000,0],[12000,9e9,5]];
+  let tax=0;
+  for(let i=0;i<st.length-1;i++){
+    const[vo,,r]=st[i],[nx]=st[i+1];
+    if(e<=vo)break;
+    tax+=(Math.min(e,nx)-vo)*r/100;
+  }
+  const l=st[st.length-1];
+  if(e>l[0])tax+=(e-l[0])*l[2]/100;
+  return tax;
+}
+
+function cS(){
+  const lohn=gv('s-lohn'),neb=gv('s-neb'),a3=Math.min(gv('s-3a'),7056),kk=gv('s-kk'),bk=gv('s-bk');
+  const ziv=document.getElementById('s-ziv').value,konf=document.getElementById('s-konf').value;
+  const kKey=document.getElementById('s-kt').value,kd=KT[kKey]||{kf:100,ki:{ref:0,rk:0},g:{}};
+  const gf=+(document.getElementById('s-gm').value)||100,kf=kd.kf;
+  const soz=ziv==='verheiratet'?2600:0;
+  const stb=Math.max(0,lohn+neb-bk-soz-a3-kk);
+  const bund=ziv==='verheiratet'||ziv==='alleinerziehend'?bV(stb):bL(stb);
+  const kb=kP(stb,kKey),kant=kb*kf/100,gem=kb*gf/100;
+  const kif=konf!=='keine'?(kd.ki[konf]||0):0,kirch=kb*kif/100;
+  const tot=bund+kant+gem+kirch,br=lohn+neb,rate=br>0?tot/br*100:0;
+  const stb1k=Math.max(0,lohn+neb-bk-soz-a3-kk+1000);
+  const grz=br>0?((kP(stb1k,kKey)*(kf+gf+kif)/100+(ziv==='verheiratet'?bV(stb1k):bL(stb1k)))-(kb*(kf+gf+kif)/100+bund))/1000*100:0;
+  const stbOhne=Math.max(0,lohn+neb-bk-soz-kk);
+  const sp3=Math.max(0,((ziv==='verheiratet'?bV(stbOhne):bL(stbOhne))+kP(stbOhne,kKey)*(kf+gf+kif)/100)-(bund+kant+gem+kirch));
+  const mx=tot||1,bw=v=>Math.min(100,v/mx*100)+'%';
+  s('sr-bund','~ CHF '+F(bund));s('sr-kant','~ CHF '+F(kant));
+  s('sr-gem','~ CHF '+F(gem));s('sr-kirch','~ CHF '+F(kirch));
+  s('sr-stb','~ CHF '+F(stb));s('sr-rate','~ '+P(rate));
+  s('sr-grz','~ '+P(grz));s('sr-tot','~ CHF '+F(tot));
+  document.getElementById('sb-bund').style.width=bw(bund);
+  document.getElementById('sb-kant').style.width=bw(kant);
+  document.getElementById('sb-gem').style.width=bw(gem);
+  document.getElementById('sb-kirch').style.width=bw(kirch);
+  s('sm-n','~ CHF '+F(br-tot));s('sm-m','~ CHF '+F((br-tot)/12));
+  s('sm-3','~ CHF '+F(sp3));s('sm-sm','~ CHF '+F(tot/12));
+  const gvs=KT[kKey]?.g||{},fv=Object.values(gvs);
+  const minF=Math.min(...fv),minN=Object.entries(gvs).find(([,f])=>f===minF)?.[0]||'';
+  const tip=document.getElementById('st-tip');
+  if(minF<gf-5)
+    tip.innerHTML=`<strong>Einschätzung:</strong> ${kd.n} — Gemeinde <strong>${minN}</strong> hat Steuerfuss ${minF} % (aktuell ${gf} %). Potenzielle Ersparnis: ~ CHF ${F(kb*(gf-minF)/100)} / Jahr.`;
+  else
+    tip.innerHTML=`<strong>Einschätzung:</strong> Maximale Säule 3a (CHF 7'056) spart im Kanton ${kd.n} schätzungsweise ~ CHF ${F(sp3)} Steuern pro Jahr.`;
+}
+
+// ── SÄULE 3A ──
+function c3(){
+  const eink=gv('p-eink'),einz=+(document.getElementById('p-einz').value)||7056;
+  const jahre=+(document.getElementById('p-jahr').value)||20;
+  const rend=+(document.getElementById('p-rend').value)/100||.03;
+  const kk=document.getElementById('p-kt').value;
+  const js=(kP(eink,kk)-kP(Math.max(0,eink-einz),kk))*1.5;
+  const ts=js*jahre,kap=einz*jahre;
+  const kapz=einz*((Math.pow(1+rend,jahre)-1)/rend)*(1+rend);
+  const ert=kapz-kap,ges=ts+ert;
+  s('p-js','~ CHF '+F(js));s('p-ts','~ CHF '+F(ts));
+  s('p-kap','CHF '+F(kap));s('p-kapz','~ CHF '+F(kapz));
+  s('p-ert','~ CHF '+F(ert));s('p-ges','~ CHF '+F(ges));
+  const mx=Math.max(kap,ert,ts)||1;
+  const fk=n=>n>=1000?(n/1000).toFixed(0)+'k':F(n);
+  document.getElementById('p-bar').innerHTML=
+    `<div class="pillar" style="height:${Math.max(4,kap/mx*86)}px;background:#333">${fk(kap)}</div>`+
+    `<div class="pillar" style="height:${Math.max(4,ert/mx*86)}px;background:#555">${fk(ert)}</div>`+
+    `<div class="pillar" style="height:${Math.max(4,ts/mx*86)}px;background:var(--red)">${fk(ts)}</div>`;
+}
+
+// ── VERSICHERUNG ──
+function cV(){
+  const alt=gv('v-alt'),hh=document.getElementById('v-hh').value;
+  const ch=[
+    {i:'🏥',n:'Krankenkasse',s:'Grundversicherung KVG',ok:true,t:'Pflicht in der Schweiz'},
+    {i:'➕',n:'Zusatzversicherung',s:'Ambulant / Spital / Dental',ok:true,t:'KPT Pulse empfohlen'},
+    {i:'💼',n:'Lebensversicherung',s:'Todesfallschutz / Vorsorge',ok:alt<60,t:alt<40?'Jetzt günstig abschliessen':'Konditionen prüfen'},
+    {i:'🛡️',n:'Privathaftpflicht',s:'Personen- & Sachschäden',ok:true,t:'Unverzichtbar'},
+    {i:'🏠',n:'Hausrat',s:'Einrichtung & Wertsachen',ok:true,t:'All-Risk empfohlen'},
+    {i:'📈',n:'Erwerbsunfähigkeit',s:'BU-Rente / Invalidität',ok:alt<55,t:'Oft unterschätzt'},
+    {i:'⚕️',n:'Unfall NBU',s:'Nichtberufsunfall',ok:true,t:'Ergänzend zur Obligatorischen'},
+    {i:'✈️',n:'Reiseversicherung',s:'Annullierung & Assistance',ok:hh==='familie',t:hh==='familie'?'Bei Familie wichtig':'Optional'}
+  ];
+  document.getElementById('v-grid').innerHTML=ch.map(c=>`
+    <div class="ins-card" onclick="this.classList.toggle('on')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div style="font-size:clamp(16px,3vw,20px)">${c.i}</div>
+        <span class="ins-rec">${c.ok?'Empfohlen':'Optional'}</span>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(13px,2vw,15px);text-transform:uppercase;letter-spacing:.03em;margin-bottom:2px">${c.n}</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px">${c.s}</div>
+      <div style="font-size:11px;color:var(--muted)">${c.t}</div>
+    </div>`).join('');
+  const em=[];
+  if(alt<40)em.push('Lebensversicherung jetzt abschliessen — Prämien unter 40 deutlich günstiger.');
+  if(hh==='familie')em.push('Todesfallschutz prüfen — Bei Kindern besonders wichtig.');
+  em.push('Grundfranchise optimieren — Höchste Franchise bei guter Gesundheit spart bis CHF 1\'400 / Jahr.');
+  em.push('KPT Pulse ambulant — Günstige ambulante Zusatzdeckungen mit Fitness-Beitrag.');
+  document.getElementById('v-empf').innerHTML=em.map(e=>`
+    <div class="step"><span class="step-num">→</span><div class="step-body"><p>${e}</p></div></div>`).join('');
+}
+
+// ── KONTAKT ──
+function submitForm(){
+  document.getElementById('k-ok').style.display='block';
+  document.querySelector('#page-kontakt .submit-btn').style.display='none';
+}
+
+// ── INIT ──
+initKt();cB();cS();c3();cV();
+</script>
+</body>
+</html>
